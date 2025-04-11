@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
 
     SDL_Window* window = SDL_CreateWindow("Animated Clock",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        640, 480, SDL_WINDOW_SHOWN);
+        1280, 720, SDL_WINDOW_SHOWN);
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1,
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
     }
     TTF_SetFontHinting(font, TTF_HINTING_LIGHT);
 
-    SDL_Color textColor = {255, 255, 255, 255};
+    SDL_Color textColor = {255, 0, 255, 255};
     int quit = 0;
     SDL_Event event;
     const int padding = 10;
@@ -193,8 +193,8 @@ int main(int argc, char* argv[]) {
         // Format strings
         char timestr[20], datestr[20], daystr[20];
         strftime(timestr, sizeof(timestr), "%H:%M:%S", timeinfo);
-        strftime(daystr, sizeof(daystr), "%a", timeinfo);
-        strftime(datestr, sizeof(datestr), 
+        strftime(daystr, sizeof(daystr), " %a", timeinfo);
+        strftime(datestr, sizeof(datestr),
                 strcmp(date_fmt, "dd-mm") == 0 ? "%d-%m" : "%m-%d", timeinfo);
 
         // Single render pass
@@ -203,10 +203,10 @@ int main(int argc, char* argv[]) {
         
         // Render text elements directly
         render_text(renderer, font, timestr, textColor, pos_x, pos_y);
-        render_text(renderer, font, datestr, textColor, 
+        render_text(renderer, font, datestr, textColor,
                    pos_x, pos_y + font_size + padding);
-        render_text(renderer, font, daystr, textColor, 
-                   pos_x + (strlen(datestr) * font_size * 0.6), 
+        render_text(renderer, font, daystr, textColor,
+                   pos_x + (strlen(datestr) * font_size * 0.6),
                    pos_y + font_size + padding);
 
         SDL_RenderPresent(renderer);
